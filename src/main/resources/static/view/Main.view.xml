@@ -1,0 +1,55 @@
+<mvc:View
+	controllerName="com.penninkhof.odata.controller.Main"
+	xmlns:html="http://www.w3.org/1999/xhtml"
+	xmlns:mvc="sap.ui.core.mvc"
+	xmlns="sap.m">
+	<App>
+		<pages>
+			<Page title="{i18n>title}">
+				<content>
+				
+					<Toolbar id="filterToolbar">
+						<SearchField 
+							id="searchField" 
+							showRefreshButton="false" 
+							search="onSearchPressed" 
+							width="100%" 
+							class="odataSearchLayout" 
+							placeholder="{i18n>searchPlaceholder}"/>
+					</Toolbar>
+					
+					<Table
+						id="table" 
+						inset="false"
+						class="odataControlLayout"
+						items="{odata>/Members}">
+						
+						<columns>
+							<Column id="id" />
+							<Column id="firstName" hAlign="Left" />
+							<Column id="lastName" hAlign="Left" />
+						</columns>
+		
+						<ColumnListItem 
+							id="columnListItem" 
+							vAlign="Middle">
+							<cells>
+								<ObjectIdentifier
+									title="{odata>Id}"
+									class="sapMTableContentMargin"/>
+								<Text 
+									text="{odata>FirstName}" 
+									class="sapMTableContentMargin" />
+								<Text 
+									text="{odata>LastName}" 
+									class="sapMTableContentMargin" />
+							</cells>
+						</ColumnListItem>
+						
+					</Table>
+					
+				</content>
+			</Page>
+		</pages>
+	</App>
+</mvc:View>
