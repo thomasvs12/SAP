@@ -21,16 +21,20 @@ public class Application {
 
 	@Bean
 	public CommandLineRunner demo(final MemberRepository repository) {
-		return (args) -> {
-			// Add a couple of Members if the table is still empty
-			if (repository.count() == 0) {
-				repository.save(new Member("Jack", "Bauer"));
-				repository.save(new Member("Chloe", "O'Brian"));
-				repository.save(new Member("Kim", "Bauer"));
-				repository.save(new Member("David", "Palmer"));
-				repository.save(new Member("Michelle", "Dessler"));
-			}
-		};
+	    return new CommandLineRunner() {
+			public void run(String... args) throws Exception {
+				// Add a couple of Members if the table is still empty
+				if (repository.count() == 0) {
+					repository.save(new Member("Jack", "Bauer"));
+					repository.save(new Member("Chloe", "O'Brian"));
+					repository.save(new Member("Kim", "Bauer"));
+					repository.save(new Member("David", "Palmer"));
+					repository.save(new Member("Michelle", "Dessler"));
+				}
+	        }
+	    };
 	}
+	
+	
 
 }
