@@ -1,27 +1,22 @@
 package com.penninkhof.odata.entities;
 
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.Index;
 import javax.persistence.Table;
 
 @Entity
-@Table(name="members",
-		indexes={@Index(name="lastName", columnList="lastName", unique=false)})
+@Table(name="members")
 public class Member {
 
 	@Id
-	@GeneratedValue(strategy=GenerationType.AUTO)
-	
 	private int id;
     private String firstName;
     private String lastName;
 
     protected Member() {}
 
-    public Member(String firstName, String lastName) {
+    public Member(int id, String firstName, String lastName) {
+    	this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
     }

@@ -7,6 +7,7 @@
     <groupId>com.penninkhof</groupId>
     <artifactId>odata</artifactId>
     <version>0.1.0</version>
+    <packaging>${packaging.type}</packaging>
 
 	<parent>
         <groupId>org.springframework.boot</groupId>
@@ -20,19 +21,84 @@
 		<olingo.version>2.0.6</olingo.version>
     </properties>
 
+	<profiles>
+
+		<!-- HANA Cloud Platform -->
+		<profile>
+			<id>hcp</id>
+			<activation>
+				<activeByDefault>true</activeByDefault>
+			</activation>
+			<properties>
+				<packaging.type>war</packaging.type>
+		        <tomcat.version>7.0.59</tomcat.version>
+			</properties>
+			<dependencies>
+				<dependency>
+					<groupId>org.springframework.boot</groupId>
+					<artifactId>spring-boot-starter-web</artifactId>
+					<!-- Some exclusions are necessary to make Spring Boot run on HCP. --> 
+					<exclusions>
+						<exclusion>
+							<groupId>org.springframework.boot</groupId>
+							<artifactId>spring-boot-starter-tomcat</artifactId>
+						</exclusion>
+						<exclusion>
+							<groupId>org.apache.tomcat.embed</groupId>
+							<artifactId>tomcat-embed-el</artifactId>
+						</exclusion>
+						<exclusion>
+							<artifactId>logback-classic</artifactId>
+							<groupId>ch.qos.logback</groupId>
+						</exclusion>
+					</exclusions>
+				</dependency>
+				<dependency>
+					<groupId>org.springframework.boot</groupId>
+					<artifactId>spring-boot-starter-data-jpa</artifactId>
+					<!-- Without this exclusions, the HCP runtime will not be so happy -->
+					<exclusions>
+						<exclusion>
+							<artifactId>logback-classic</artifactId>
+							<groupId>ch.qos.logback</groupId>
+						</exclusion>
+					</exclusions>
+				</dependency>
+				<dependency>
+					<groupId>org.slf4j</groupId>
+					<artifactId>slf4j-api</artifactId>
+					<scope>provided</scope>
+				</dependency>
+				<dependency>
+					<groupId>javax.servlet</groupId>
+					<artifactId>javax.servlet-api</artifactId>
+					<version>3.0.1</version>
+					<scope>provided</scope>
+				</dependency>
+			</dependencies>
+		</profile>
+		
+		<!-- Self-contained JAR -->
+		<profile>
+			<id>jar</id>
+			<properties>
+				<packaging.type>jar</packaging.type>
+			</properties>
+			<dependencies>
+				<dependency>
+					<groupId>org.springframework.boot</groupId>
+					<artifactId>spring-boot-starter-web</artifactId>
+				</dependency>
+				<dependency>
+					<groupId>org.springframework.boot</groupId>
+					<artifactId>spring-boot-starter-data-jpa</artifactId>
+				</dependency>
+			</dependencies>
+		</profile>
+		
+	</profiles>
+	
 	<dependencies>
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-data-jpa</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-web</artifactId>
-		</dependency>
-	    <dependency>
-	        <groupId>org.springframework.boot</groupId>
-	        <artifactId>spring-boot-starter-actuator</artifactId>
-	    </dependency>
         <dependency>
             <groupId>mysql</groupId>
             <artifactId>mysql-connector-java</artifactId>
@@ -83,18 +149,6 @@
 	                <target>${java.version}</target>
 	            </configuration>
 	        </plugin>
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-eclipse-plugin</artifactId>
-				<configuration>
-					<downloadSources>true</downloadSources>
-	          		<downloadJavadocs>true</downloadJavadocs>
-					<wtpversion>2.0</wtpversion>
-					<additionalProjectFacets>
-						<jpt.jpa>2.1</jpt.jpa>
-					</additionalProjectFacets>
-				</configuration>
-			</plugin>
         </plugins>
     </build>
 	
