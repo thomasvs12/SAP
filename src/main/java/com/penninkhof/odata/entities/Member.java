@@ -13,7 +13,7 @@ public class Member {
     private String firstName;
     private String lastName;
 
-    protected Member() {}
+    public Member() {}
 
     public Member(int id, String firstName, String lastName) {
     	this.id = id;
