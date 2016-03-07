@@ -1,0 +1,15 @@
+body {
+	font-family: "Arial";
+}
+h1 {
+	font: bold 20px "Arial";
+}
+input, textarea {
+	margin: 5px;
+	width: 200px;
+}
+img {
+	position: fixed;
+	right: 0px;
+	top: 0px;
+}

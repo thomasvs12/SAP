@@ -9,12 +9,13 @@ import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.boot.context.web.SpringBootServletInitializer;
 import org.springframework.context.annotation.Bean;
 
-import com.penninkhof.odata.entities.Member;
-import com.penninkhof.odata.repository.MemberRepository;
+import com.penninkhof.odata.entities.Shoebox;
+import com.penninkhof.odata.repository.ShoeboxRepository;
 
 @SpringBootApplication
 public class Application extends SpringBootServletInitializer {
 
+	static ShoeboxRepository repository;
 	private static final Logger log = LoggerFactory.getLogger(Application.class);
 
     @Override
@@ -27,19 +28,26 @@ public class Application extends SpringBootServletInitializer {
 	}
 
 	@Bean
-	public CommandLineRunner demo(final MemberRepository repository) {
+	public CommandLineRunner demo(final ShoeboxRepository repository) {
+		this.repository = repository;
 	    return new CommandLineRunner() {
 			public void run(String... args) throws Exception {
 				if (repository.count() == 0) {
 					log.info("Database is still empty. Adding some sample records");
-					repository.save(new Member(1, "Jack", "Bauer"));
-					repository.save(new Member(2, "Chloe", "O'Brian"));
-					repository.save(new Member(3, "Kim", "Bauer"));
-					repository.save(new Member(4, "David", "Palmer"));
-					repository.save(new Member(5, "Michelle", "Dessler"));
+					repository.save(new Shoebox(1, "tvanschaik@roc-dev.com", "Thomas"));
+					repository.save(new Shoebox(2, "sdinkelaar@roc-dev.com", "Stephan"));
+					repository.save(new Shoebox(3, "rhuseni@roc-dev.com", "Rifati"));
+					repository.save(new Shoebox(4, "skaddouri@roc-dev.com", "Soufyane"));
+					repository.save(new Shoebox(5, "dwezeman@roc-dev.com", "Daniel"));
+					
+					
 				}
 	        }
 	    };
+	}
+	
+	public static String getEmail(long barcode) {
+		return repository.findOne(barcode).getEmail();
 	}
 	
 	

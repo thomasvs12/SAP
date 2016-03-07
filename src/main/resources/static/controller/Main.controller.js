@@ -11,8 +11,8 @@ sap.ui.define([
 			var search = event.getParameters().query;
 			this.getView().byId("table").getBinding("items").filter(
 				[ new Filter([
-					new Filter("FirstName", FilterOperator.Contains, search),
-					new Filter("LastName", FilterOperator.Contains, search)
+					new Filter("Email", FilterOperator.Contains, search),
+					new Filter("Naam", FilterOperator.Contains, search)
 				], false)]);
 		}
 		

@@ -22,12 +22,12 @@
 						id="table" 
 						inset="false"
 						class="odataControlLayout"
-						items="{odata>/Members}">
+						items="{odata>/Shoeboxs}">
 						
 						<columns>
-							<Column id="id" />
-							<Column id="firstName" hAlign="Left" />
-							<Column id="lastName" hAlign="Left" />
+							<Column id="Barcode" />
+							<Column id="Email" hAlign="Left" />
+							<Column id="Naam" hAlign="Left" />
 						</columns>
 		
 						<ColumnListItem 
@@ -35,13 +35,13 @@
 							vAlign="Middle">
 							<cells>
 								<ObjectIdentifier
-									title="{odata>Id}"
+									title="{odata>Barcode}"
 									class="sapMTableContentMargin"/>
 								<Text 
-									text="{odata>FirstName}" 
+									text="{odata>Email}" 
 									class="sapMTableContentMargin" />
 								<Text 
-									text="{odata>LastName}" 
+									text="{odata>Naam}" 
 									class="sapMTableContentMargin" />
 							</cells>
 						</ColumnListItem>
